@@ -1,0 +1,140 @@
+Goal:
+ Create an Airflow pipeline to migrate student data into Snowflake
+
+Major Points of the Task:
+
+1. Creation of a Directed Acyclic Graph (DAG)
+
+Loading Data Steps:
+
+Load
+
+students.json
+Implement logging to track data loading.
+Add data validation to ensure the integrity of students.json.
+
+Load
+
+missed_days.json
+Include logging and data validation steps, similar to students.json.
+
+Data Processing Steps:
+
+Join both datasets using a dataframe.
+Implement exception handling to manage potential joining errors.
+Post-join, add steps for data cleaning and transformation.
+
+
+Loading Data into Snowflake:
+
+Load data into Snowflake as Step 2 of the process.
+
+2. Setting up Snowflake
+Create a free Snowflake account.
+
+Snowflake Configuration:
+Create a schema named Students_semantic (this is a View schema that will access the tables on the other schema) merged database data (Students_staging-> students_merged_db -> final_merged) with “Math” > 90
+->
+ Create a Database called Students_DB with 1 view that only show the 
+Create a schema named Students_staging, that will have the final database (students_merged_db) with a table named final_merged
+Use Snowflake stages for efficient data loading before the final merge.
+Create the table structure that best represents the merged dataset.
+
+Technology Stack Required:
+Airflow: Latest Version
+Airflow
+ Documentation
+Python 3.8
+
+Definition of Done and Deliverables:
+GitHub Repository:
+A link showing all the Airflow code.
+Table structures created on Snowflake.
+
+Detailed README.md documenting the entire process and explaining the code.
+
+Well-commented Airflow DAGs and Python scripts.
+
+Unit tests for the Airflow tasks.
+
+Final Output:
+A screenshot of the final data in Snowflake.
+
+Bonus (Optional):
+Interactive Dashboard:
+Create an interactive dashboard (using tools like Tableau or Power BI) to visualize the final data in Snowflake.
+Include the dashboard setup and screenshots in the GitHub repository.
+
+
+ 
+Meta:
+  Crie um pipeline do Airflow para migrar dados de alunos para o Snowflake
+
+Pontos principais da tarefa:
+
+1. Criação de um gráfico acíclico direcionado (DAG)
+
+Etapas de carregamento de dados:
+
+Carregar
+
+estudantes.json
+Implemente o registro para rastrear o carregamento de dados.
+Adicione validação de dados para garantir a integridade de estudantes.json.
+
+Carregar
+
+dias_perdidos.json
+Inclui etapas de registro e validação de dados, semelhantes a estudantes.json.
+
+Etapas de processamento de dados:
+
+Junte os dois conjuntos de dados usando um dataframe.
+Implemente o tratamento de exceções para gerenciar possíveis erros de junção.
+Após a adesão, adicione etapas para limpeza e transformação de dados.
+
+
+Carregando dados no Snowflake:
+
+Carregue os dados no Snowflake como Etapa 2 do processo.
+
+2. Configurando o floco de neve
+Crie uma conta gratuita do Snowflake.
+
+Configuração do floco de neve:
+Crie um esquema chamado
+
+Students_semantic (este é um esquema View que acessará as tabelas no
+  outro esquema)
+mesclado
+  dados do banco de dados (Students_staging-> Students_merged_db -> final_merged) com “Matemática” > 90
+->
+  Crie um banco de dados chamado Students_DB com 1 view que mostre apenas o
+Crie um esquema chamado Students_staging, que terá o banco de dados final (students_merged_db) com uma tabela chamada final_merged
+Use estágios Snowflake para carregamento eficiente de dados antes da mesclagem final.
+Crie a estrutura da tabela que melhor representa o conjunto de dados mesclado.
+
+Pilha de tecnologia necessária:
+Fluxo de ar: versão mais recente
+Fluxo de ar
+  Documentação
+Pitão 3.8
+
+Definição de Feitos e Entregáveis:
+Repositório GitHub:
+Um link mostrando todo o código do Airflow.
+Estruturas de tabela criadas no Snowflake.
+
+README.md detalhado documentando todo o processo e explicando o código.
+
+DAGs Airflow e scripts Python bem comentados.
+
+Testes de unidade para as tarefas do Airflow.
+
+Resultado final:
+Uma captura de tela dos dados finais no Snowflake.
+
+Bônus (opcional):
+Painel interativo:
+Crie um painel interativo (usando ferramentas como Tableau ou Power BI) para visualizar os dados finais no Snowflake.
+Inclua a configuração do painel e as capturas de tela no repositório GitHub.

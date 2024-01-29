@@ -1,0 +1,43 @@
+ENGLISH
+
+This is my challenge as a candidate for a Data Engineer position at HCL.
+
+The challenge was very enriching and rewarding, as it allowed me to develop my skills with Apache Airflow, which is an ETL tool that I have little experience with only in an academic context, and combine it with Snowflake, which is a tool that I had no knowledge of. Over the course of two days, I tried to apply my knowledge of other ETL tools, such as Pyspark, Nifi and Powercenter, to Apache Airflow.
+
+Initially I developed the entire ETL procedure for json files using PySpark. At the end of the transformations, I started to learn what Snowflake was and how to load data into it. However, I didn't find a connector that would allow me to receive a PySpark Dataframe and load the structure into Snowflake, similar to how I did in previous projects with Delta Tables on Databricks. I only found scenarios that allowed loading parquet files into an S3 repository and from these files creating data structures in Snowflake.
+
+After searching, I found the method write_pandas() from the package snowflake.connector.pandas_tools. Since the challenge requirement did not specify big data scenarios, it would not have been cool to have done all the processing in PySpark to transform it into Pandas again just to allow this data could be loaded in Snowflake. So I redid the ETL in Pandas. I finally was able to use this function to load data into Snowflake.
+
+However, the write_pandas() solution requires as a parameter a connection object to Snowflake with attributes such as: account, username, password and others. During my studies of Airflow, I have seen that there is the concept of CONNECTIONS in Airflow that allow you to define connections in a safer and more maintainable way, similar to Powercenter and other ETL tools. However, when using official Docker environments updated with Apache Airflow (updated that had the Snowflake connector), the Dag codes that I developed and placed into the Airflow Dag folders for some reason were not presented in Airflow Dags list. I spent Saturday afternoon until the end of the day on Sunday trying to solve the problem, without success. I tried reducing folder query times, using older versions of the official Docker image, installing Docker on a Linux host, reviewing courses and forums... without success.
+
+So, I used a CentOS VM with Hadoop that I had available, where I manually installed an older version of Airflow. I installed the connector and configured it successfully, however the write_pandas() API required a connection object of type snowflake.connector.connect() with attributes that were not returned by BaseHook() when invoking the connector I created. Therefore, within the time required for the challenge, I did not find a safe mechanism to make this connection and avoid hardcode. I could have used Airflow environment variables, but since it is also possible to extract their content via code, it didn't seem like a big difference to adopt this strategy.
+
+In addition, it was also requested to create automated tests in Apache Airflow. As I commented during the interview, I have no knowledge of Python test automation, an area that I intend to develop and will focus even more on if hired. I then developed the code through the main Dag “studentsData.py” and the task “carga_finalmerged.py”. To be able to reproduce the process, you must configure the Snowflake connection credentials in the “carga_finalmerged.py” task. For a future version of ETL, the task code “carga_finalmerged.py” should be adapted for become 2 other tasks: one responsible for ETL transformations that would return a dataframe for a second task that would use the Airflow connection to load data with safe credentials.
+
+Among the deliverables there is the “Snowflake DDL Code.sql” file with the DDL codes and tests for the structures created in Snowflake. There is also the “Print Airflow.png” file with evidence of success in the ETL and the “Print Snowflake Table Final_Merged.png” and “Print Snowflake View students_semantic.png” files with evidence of the respective structures requested in Snowflake. Finally, the “Prints Dashboard” folder contains Power BI prints as an additional challenge that was carried out by consuming the data that was loaded into Snowflake.
+
+Hope you like it!
+
+
+PORTUGUESE
+
+Este é meu desafio como candidato a vaga de Data Engineer para HCL.
+
+O desafio foi bem enriquecedor e gratificante, pois me permitiu desenvolver minhas habilidades com Apache Airflow que é uma ferramenta ETL que tenho pouca prática apenas em âmbito acadêmico e combiná-la com Snowflake que é uma ferramenta que não tinha conhecimento. No decorrer de dois dias, tentei aplicar no Apache Airflow meus conhecimentos de outras ferramentas ETL, como Pyspark, Nifi e Powercenter. 
+
+Inicialmente desenvolvi todo o procedimento de ETL dos arquivos json utilizando PySpark. Ao fim das transformações, comecei a aprender o que era Snowflake e como carregar dados nele. Contudo, não encontrei um conector que permitisse receber um PySpark Dataframe e carregar a estrutura no Snowflake, similar a como fiz em projetos anteriores com Delta Tables no Databricks. Encontrei apenas cenários que permitiam carregar arquivos parquet em repositório S3 e destes arquivos criar estruturas de dados no Snowflake.
+
+Após pesquisa, encontrei o método write_pandas() do snowflake.connector.pandas_tools. Uma vez que o requisito do desafio não especificava cenários de big data, não ficaria bacana ter feito todo o processamento em PySpark, transformar em Pandas para que então este dado pudesse ser carregado. Então, refiz o ETL em Pandas. Consegui enfim utilizando esta função carregar dados no Snowflake.
+
+Todavia, a solução write_pandas() exige como parâmetro um objeto de conexão com o Snowflake com atributos como: account, username, password e outros. Durante meus estudos de Airflow, já vi que há o conceito de CONNECTIONS no Airflow que permitem de maneira mais segura e manutenível definir conexões, similarmente ao Powercenter e outras ferramentas ETL. Contudo, por alguma razão ao utilizar ambientes Docker oficiais atualizados com o Apache Airflow (atualizados que possuíam o conector com o Snowflake), os códigos de Dags que desenvolvi e coloquei na pastas de Dag do Airflow por alguma razão não eram apresentados. Fiquei entre sábado a tarde até domingo final do dia tentando resolver o problema, sem sucesso. Tentei reduzir os tempos de consulta da pasta, utilizar versões mais antigas da imagem Docker oficial, instalar Docker em um host Linux, revi cursos e fóruns... sem sucesso. 
+
+Então, utilizei uma VM CentOS com Hadoop que dispunha, onde eu manualmente instalei uma versão mais antiga do Airflow. Instalei o conector e o configurei com sucesso, porém a API write_pandas() requeria um objeto de conexão do tipo snowflake.connector.connect() com atributos que não eram retornados pelo BaseHook() ao invocar o conector que criei. Deste modo, dentro do tempo hábil ao desafio não encontrei um mecanismo seguro de realizar esta conexão e evitar o hardcode. Poderia ter utilizado variáveis de ambiente do Airflow, mais uma vez que é possível extrair também seu conteúdo via código, não me pareceu uma grande diferença adotar esta estratégia. 
+Em tempo, também foi solicitado a criação de testes automatizados no Apache Airflow. Conforme informei na entrevista, não tenho conhecimento em automação de testes Python, área esta que pretendo desenvolver e focarei mais ainda caso contratado. Desenvolvi então o código através da Dag principal “studentsData.py” e da task “carga_finalmerged.py”. Para que seja possível reproduzir o processo, deve-se configurar na task “carga_finalmerged.py” as credenciais de conexão do Snowflake. Para uma futura versão do ETL, deveria ser adaptado o código da task “carga_finalmerged.py” para 2 outras tasks: uma responsável pelas transformações de ETL que retornaria um dataframe para uma segunda task que usaria a connection do Airflow para o load de uma maneira segura.
+
+Entre os entregáveis, estão também os arquivos “Snowflake DDL Code.sql” com os códigos DDL e os testes para as estruturas criadas no Snowflake. Há também o arquivo “Print Airflow.png” com a evidência de sucesso no ETL e os arquivos “Print Snowflake Table Final_Merged.png” e “Print Snowflake View students_semantic.png” com as evidências das respectivas estruturas solicitadas no Snowflake. Enfim, na pasta “Prints Dashboard” constam os prints do Power BI como desafio adicional que foi realizado consumindo os dados que foram carregados no Snowflake. 
+
+Espero que gostem!
+
+
+
+
